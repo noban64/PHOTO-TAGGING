@@ -1,24 +1,11 @@
-# README
+#Where's Wally?
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+From TOP -- React Section -- Where's Wally game (https://www.theodinproject.com/lessons/react-new-where-s-waldo-a-photo-tagging-app)
 
-Things you may want to cover:
+* RoR 8.0.2
 
-* Ruby version
+#Non-native Gems
 
-* System dependencies
+* Devise (For account and user creation)
+* Annotation (For easy viewing of schema)
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
