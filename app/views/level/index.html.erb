@@ -1,0 +1,18 @@
+<head>
+    <title> </title>
+</head>
+<h2> Page of levels!</h2>
+
+<% if !@levels.blank? then %>
+<p> <%=@levels.class%></p>
+<%@levels.each do |level| %>
+
+<ul> 
+    <li> Level <%=level.level_id%> </li>
+    
+    <ul>
+<%end%>
+<%else%>
+    <span> there are no levels at the moment! </span>
+
+<%end%>
