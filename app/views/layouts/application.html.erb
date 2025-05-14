@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+  
+    <%=stylesheet_link_tag "generalLayout.css"%>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -20,6 +22,11 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
   </head>
+  <ul id="navigationHeader">
+    <li><%=link_to("Level select",root_path)%></li>
+    <li><%=link_to("Scoreboard", scoreboard_path)%></li>
+    <li><%=link_to("About",about_path)%></li>
+  </ul>
 
   <body>
     <%= yield %>

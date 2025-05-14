@@ -8,7 +8,7 @@
 <%@levels.each do |level| %>
 
 <ul> 
-    <li> Level <%=level.level_id%> </li>
+    <li><%=link_to("Level #{level.id}", level_path)%></li>
     
     <ul>
 <%end%>

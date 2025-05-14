@@ -4,7 +4,11 @@ class LevelController < ApplicationController
 		 @levels = Level.all;
 	end	
 
-	def view
+	def level
+		# @level = Level.where(params[:id]);
 	end
+
+	def about 
+	end 
 
 end
