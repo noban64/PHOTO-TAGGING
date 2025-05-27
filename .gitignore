@@ -31,7 +31,8 @@
 /public/assets
 
 #Ignore Node JS files
-/app/assets/builds/*	
+./app/assets/builds/*	
+/app/assets/builds/*
 /node_modules/*
 
 # Ignore master key for decrypting credentials and more.
