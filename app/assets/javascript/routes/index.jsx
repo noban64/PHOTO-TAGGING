@@ -10,7 +10,7 @@ export default (
   <Router>
     <Routes>
       <Route path="/" element={<Home />} ErrorBoundary={<ErrorPage/>}/>
-      <Route path="/level" element={<Levels />} ErrorBoundary={<ErrorPage/>}/>
+      <Route path="/level/:id" element={<Levels />} ErrorBoundary={<ErrorPage/>}/>
       <Route path="/scoreboard" element={<Scoreboard />} ErrorBoundary={<ErrorPage/>}/>
       <Route path="/about" element={<About />} ErrorBoundary={<ErrorPage/>}/>
     </Routes>

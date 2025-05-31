@@ -7,8 +7,13 @@ class LevelController < ApplicationController
 
 	def level 
 		# basically the show view
-		@level = Level.where(params[:id]);
-		
+		if  Level.exists?(params[:id]) then 
+			@level = Level.find(params[:id]);
+		else 
+			redirect_to :root;
+			flash[:alert] = "Level does not exist!"
+		end
+
 		###
 		@testing = [1,2,3,4]
 		respond_to do | format| 

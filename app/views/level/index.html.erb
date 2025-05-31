@@ -7,5 +7,23 @@
 </head>
 <body>
     
+    <h1>Welcome to Where's Wally!</h1>
+    <ul>
+        <%if @levels.exists? then%>
+            <%@levels.each do |level| %>
+                <li id="levelSelect">
+                     <%=link_to "Level #{level.id}","/level/#{level.id}"%>
+                </li>
+            <%end%>
+        <%else%>
+                <p>There are no levels available right now!</p>
+        <%end%>
+    </ul>
+
+    <% flash.each do |type, msg| %>
+  <div>
+    <%= msg %>
+  </div>
+<% end %>
 </body>
 </html>

@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check#
 
   get "/about", to: "level#about"
-  get "/level", to: "level#level"
+  get "/level/:id", to: "level#level"
   # get "/", to: "level#index"
   get "/scoreboard", to: "scoreboard#view"
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
