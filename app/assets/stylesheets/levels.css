@@ -10,6 +10,10 @@
 
 
 }
+#playingMap{
+    height:600px;
+    width:600px;
+}
 #playField{
     border: 1px solid black;
     width:auto;
@@ -26,9 +30,6 @@
     width: 10px;
 }
 .grid-Column{
-    /* height:auto; */
-    /* width:auto; */
-
     display:flex;
 }
 

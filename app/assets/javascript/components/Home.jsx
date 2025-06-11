@@ -5,11 +5,11 @@ import Footer from "./Footer";
 export default () =>  {
   return(
     <>
-    <div>
+    {/* <div>
       <h1>
         Welcome to Wheres wally!
       </h1>
-    </div>
+    </div> */}
     <Footer /> 
   </>
 );

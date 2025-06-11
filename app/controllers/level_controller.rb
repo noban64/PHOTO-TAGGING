@@ -19,6 +19,14 @@ class LevelController < ApplicationController
       redirect_to :root
       flash[:alert] = "Level does not exist!"
     end
+
+		## timer (test)
+    levelComplete = nil
+		starting_time = Time.now
+		if levelComplete == true then 
+			ending_time = (starting_time - Time.now)
+		end 
+
   end
 
   def about

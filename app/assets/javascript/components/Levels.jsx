@@ -1,5 +1,6 @@
 import React, { useState, useEffect,useRef } from "react";
 import {useParams} from "react-router-dom"
+import Timer from "./Timer";
 
 export default () => {
   const [character, setCharacter] = useState(1);
@@ -106,6 +107,7 @@ export default () => {
   //endoftesting
   return (
     <>
+    <Timer />
       <div id="gameContainer">
         <div id="playField">
           <div id="map" ref={mapRef}>
