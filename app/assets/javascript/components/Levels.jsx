@@ -12,24 +12,26 @@ export default () => {
   const mapRef = useRef(null)
 
 
-  // async function getData() {
-  //     const url = ("http://testing:3000/api/v1/data/" + id);
-  //   try{
-  //       const call = await fetch(url);
-  //       const data = await call; 
-  //       
-  //       console.log(call)
-  //       console.log(data);
-  //      setCoordinates(data.coords.json());
-  //      setLevelImage(data.url.json());
-  //       
-  //   }
-  //   catch(error){ 
-  //       console.log(error);
-  //   }
-  // }
+  async function getData() {
+      const url = ("http://testing:3000/api/v1/data/" + id);
+    try{
+        const call = await fetch(url);
+        const data = await call.json(); 
+        
+        console.log(call)
+        console.log(data);
+      //  setCoordinates(data.coordinates.json());
+       setLevelImage(data.url);
+        
+    }
+    catch(error){ 
+        console.log(error);
+    }
+  }
 
-  function verifyCoordinate(coordinates) {}
+  function verifyCoordinate(coordinates) {
+    
+  }
 
   function imageClickHandler(position) {
     console.log("you have clicked" + JSON.stringify(position))
@@ -84,20 +86,7 @@ export default () => {
 
   useEffect(() => {
     console.log("Using effect")
-    async function getImage() {
-      const url = ("http://testing:3000/api/v1/data/" + id);
-    try{
-        const call = await fetch(url);
-        const data = await call.json(); 
-        console.log(data.url);
-        setLevelImage(data.url);
-    }
-    catch(error){ 
-        console.log(error);
-    }
-  }
-
-    getImage();
+    getData();
     console.log(levelImage)
   }, []);
 
