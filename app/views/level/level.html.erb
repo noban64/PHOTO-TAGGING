@@ -10,6 +10,12 @@
 </head>
 <body>
 <h1>Level <%=@level.id%></h1>
+
+<%if @level.images.attached? then %>
+  <%=image_tag @level.images.variant(:screen) %>
+<%else%>
+    <p>There's nothing attached!?</p>
+<% end %>
     
 </body>
 </html>

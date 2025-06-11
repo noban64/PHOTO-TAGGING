@@ -1,6 +1,7 @@
 #gameContainer{
     border: 1px solid black;
     display:flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
@@ -11,12 +12,26 @@
 }
 #playField{
     border: 1px solid black;
-    width:75%;
-    height:75%;
+    width:auto;
+    height:auto;
     display:flex;
     flex-direction: column;
 
 }
+#clickMap{
+    position: absolute;
+}
+.grid-Row{
+    height: 10px;
+    width: 10px;
+}
+.grid-Column{
+    /* height:auto; */
+    /* width:auto; */
+
+    display:flex;
+}
+
 
 #map{
     width:90%;

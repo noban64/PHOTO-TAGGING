@@ -1,31 +1,26 @@
 class LevelController < ApplicationController
+  def index
+     @levels = Level.all.order(id: :asc)
+  end
 
-	def index
-		 @levels = Level.all;
+  def level
+    # basically the show view
+    if  Level.exists?(params[:id]) then
+      @level = Level.find(params[:id])
+      # only use if im trying to update the levels
+      # @level.images.attach(io: File.open("storage/Level_Assets/MMX_#{params[:id]}.webp"), filename: "MMX_#{params[:id]}.webp")
 
-	end	
+      respond_to do | format|
+        format.html
+        format.xml { render xml: url_for(@level.images) }
+        format.json { render json: url_for(@level.images) }
+    end
+    else
+      redirect_to :root
+      flash[:alert] = "Level does not exist!"
+    end
+  end
 
-	def level 
-		# basically the show view
-		if  Level.exists?(params[:id]) then 
-			@level = Level.find(params[:id]);
-		else 
-			redirect_to :root;
-			flash[:alert] = "Level does not exist!"
-		end
-
-		###
-		@testing = [1,2,3,4]
-		respond_to do | format| 
-				format.html
-				format.xml { render :xml => @testing} 
-				format.json { render :json => @testing} 
-		end
-		###
-	end
-
-	def about 
-
-	end 
-
+  def about
+  end
 end
