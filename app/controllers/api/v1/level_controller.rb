@@ -5,7 +5,10 @@ module Api
         def data ## Level Data
             if  Level.exists?(params[:id]) then
               @level = Level.find(params[:id])
-              respond_with({'level_id': @level.id, 'coordinates': @level.level_coordinates, 'url': url_for(@level.images)})
+              @coordinates = @level.coordinates.map do |coordinate|
+                 {'character_id': coordinate.character_id, 'x_cord': coordinate.x_cord, 'y_cord': coordinate.y_cord}
+              end
+              respond_with({'level_id': @level.id, 'coordinates': @coordinates, 'url': url_for(@level.images)})
             else
               respond_with("This level does not exist!")
               flash[:alert] = "Level does not exist!"

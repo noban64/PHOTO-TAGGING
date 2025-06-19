@@ -8,6 +8,7 @@ export default () => {
   const {id} = useParams()
   const [levelImage,setLevelImage] = useState("#");
   const [coordinates, setCoordinates] = useState([]);
+  const [score, setScore] = useState(0);
   const levelRef = useRef(null)
   const mapRef = useRef(null)
 
@@ -17,31 +18,57 @@ export default () => {
     try{
         const call = await fetch(url);
         const data = await call.json(); 
-        
-        console.log(call)
-        console.log(data);
-      //  setCoordinates(data.coordinates.json());
-       setLevelImage(data.url);
+
+        applyCoordinates(data);
+        setLevelImage(data.url);
         
     }
     catch(error){ 
         console.log(error);
     }
   }
+function incrementScore(){ 
+  setScore(score + 1);
+}
+  function applyCoordinates(coordinateSet) {  
+    console.log(coordinateSet)
+    newCoordinates = coordinateSet.coordinates.map((newCord) => {
+      return newCord
+    });
+    setCoordinates(newCoordinates)
+  }
+  function verifyCoordinate(clickedCoordinate) {
+    console.log(clickedCoordinate)
+    mappedCords = coordinates.map((coord) => {
+    return [coord.x_cord,coord.y_cord]
+  })
+    if (JSON.stringify(mappedCords).includes(JSON.stringify(clickedCoordinate))) {
+      console.log("You found the character!")
+    }
+    else {
+      console.log("Try again!")
+    }
 
-  function verifyCoordinate(coordinates) {
-    
   }
 
   function imageClickHandler(position) {
     console.log("you have clicked" + JSON.stringify(position))
-  }
+    verifyCoordinate(position);
+    }
   function imageClick() {}
 
   function updateGrid(gridUpdate) { 
     setGrid([...grid, gridUpdate])
   }
 
+  function checkGamestate() { 
+    if (score > 4) { 
+      console.log("you win!")
+    }
+  }
+  function scoreboardCreation() { 
+    
+  }
   function makeplayArea() { 
     let levelHeight = Math.round(levelRef.current.clientHeight/10);
     let levelWidth = Math.round(levelRef.current.clientWidth/10);
@@ -92,6 +119,7 @@ export default () => {
 
   ///testing
   console.log(grid)
+  console.log(coordinates)
 
   //endoftesting
   return (

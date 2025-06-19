@@ -10,8 +10,8 @@
 #
 
 class Level < ApplicationRecord
-  has_many :coordinates, dependent: :destroy;
+  has_many :coordinates, dependent: :destroy
   has_one_attached :images do |image|
-    image.variant :screen, resize_to_limit: [1280,720];
+    image.variant :screen, resize_to_limit: [ 1280, 720 ]
   end
 end

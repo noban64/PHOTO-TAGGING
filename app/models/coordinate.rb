@@ -16,5 +16,5 @@
 #
 
 class Coordinate < ApplicationRecord
-  belongs_to :level;
+  belongs_to :level
 end
