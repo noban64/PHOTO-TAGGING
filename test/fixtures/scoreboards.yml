@@ -5,9 +5,9 @@
 #  id          :integer          not null, primary key
 #  level_id    :integer
 #  player_name :string
-#  score       :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  score       :time
 #
 
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

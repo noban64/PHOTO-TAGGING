@@ -30,11 +30,15 @@ class LevelController < ApplicationController
     levelComplete = nil
 		starting_time = Time.now
 		if levelComplete == true then 
-			ending_time = (starting_time - Time.now)
+			@@final_time = (starting_time - Time.now)
+      session[:time] = @@final_time
 		end 
 
   end
 
+  def scoreboard
+    @scoreboard = Scoreboard.new("level_id": params[:id], "player_name": params[:name] || "Anonymous", "score": session[:time])
+  end
   def about
   end
 end

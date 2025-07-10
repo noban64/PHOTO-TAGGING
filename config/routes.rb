@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   get "/about", to: "level#about"
   get "/level/:id", to: "level#level"
+  post "/level/:id/newboard", to: "level#scoreboard"
   get "/scoreboard", to: "scoreboard#view"
   root "level#index"
 

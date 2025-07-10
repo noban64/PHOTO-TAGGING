@@ -4,11 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scoreboard</title>
+
+    <%=stylesheet_link_tag "scoreboard"%>
 </head>
 <body>
 <p>here will go the scoreboard</p>
-
-
-
+<div id="tableContainer">
+<table>
+    <caption> Scoreboard for various stages!</caption>
+    <thead>
+    <tr>
+        <th>Number</th>
+        <th>Name</th>
+        <th>Score</th>
+        <th>Stage</th>
+    <tr>
+    <thead>
+    <tbody>
+    <%if @scoreboard then %>
+    <tr>
+        <%scoreboard_position = 0%>
+        <%@scoreboard.each do  |score| %>
+            <th scope="row"><%=scoreboard_position+=1%></th>
+            <td> <%=score.player_name%></td> 
+            <td> <%=score.score.strftime("%H:%M:%S")%></td> 
+            <td>  <%=link_to score.level_id , ("level/" + score.level_id.to_s) %></td> 
+    </tr>
+        <%end%>
+    <%else%>
+    <tr>
+        <th scope="row"> 1<%#=score%></th>
+        <td> Test Name<%#=score%></td> 
+        <td> 3:53<%#=score%></td> 
+        <td> Stage 1 <%#=score%></td> 
+    </tr>
+    <%end%>
+    </tbody>
+</table>
+</div>
 </body>
 </html>
