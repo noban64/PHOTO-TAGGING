@@ -3,9 +3,9 @@ class LevelController < ApplicationController
      @levels = Level.all.order(id: :asc)
   end
 
-  def attach 
+  def attach
     @levels = Level.all()
-    
+
     @levels.each do |level|
       level.images.attach(io: File.open("storage/Level_Assets/MMX_#{level.id}.webp"), filename: "MMX_#{level.id}.webp")
     end
@@ -25,15 +25,6 @@ class LevelController < ApplicationController
       redirect_to :root
       flash[:alert] = "Level does not exist!"
     end
-
-		## timer (test)
-    levelComplete = nil
-		starting_time = Time.now
-		if levelComplete == true then 
-			@@final_time = (starting_time - Time.now)
-      session[:time] = @@final_time
-		end 
-
   end
 
   def scoreboard

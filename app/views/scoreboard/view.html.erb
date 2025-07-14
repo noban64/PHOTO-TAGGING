@@ -14,7 +14,7 @@
     <caption> Scoreboard for various stages!</caption>
     <thead>
     <tr>
-        <th>Number</th>
+        <th>Position</th>
         <th>Name</th>
         <th>Score</th>
         <th>Stage</th>
@@ -27,7 +27,7 @@
         <%@scoreboard.each do  |score| %>
             <th scope="row"><%=scoreboard_position+=1%></th>
             <td> <%=score.player_name%></td> 
-            <td> <%=score.score.strftime("%H:%M:%S")%></td> 
+            <td> <%=score.score%></td> 
             <td>  <%=link_to score.level_id , ("level/" + score.level_id.to_s) %></td> 
     </tr>
         <%end%>

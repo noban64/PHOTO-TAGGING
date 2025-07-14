@@ -7,7 +7,7 @@
 #  player_name :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  score       :time
+#  score       :string
 #
 
 class Scoreboard < ApplicationRecord

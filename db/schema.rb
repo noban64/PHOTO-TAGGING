@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_09_104750) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_14_140109) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -64,7 +64,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_09_104750) do
     t.string "player_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.time "score"
+    t.string "score"
   end
 
   create_table "scores", force: :cascade do |t|

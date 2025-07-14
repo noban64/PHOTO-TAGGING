@@ -1,138 +1,169 @@
-import React, { useState, useEffect,useRef } from "react";
-import {useParams} from "react-router-dom"
+import React, { useState, useEffect, useRef } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Timer from "./Timer";
 
 export default () => {
   const [character, setCharacter] = useState(1);
-  const [grid, setGrid] = useState([])
-  const {id} = useParams()
-  const [levelImage,setLevelImage] = useState("#");
+  const [grid, setGrid] = useState([]);
+  const { id } = useParams();
+  const [levelImage, setLevelImage] = useState("#");
   const [coordinates, setCoordinates] = useState([]);
   const [score, setScore] = useState(0);
   const [eventDisabled, setEventDisabled] = useState(false);
+  const [playerName, setPlayerName] = useState("Anonymous");
   const levelRef = useRef(null);
   const mapRef = useRef(null);
   const playingFieldRef = useRef(null);
-
-
+  //
+  function debug() {
+    console.log("--------------------");
+    console.log("--------DEBUG----");
+    console.log(grid);
+    console.log(coordinates);
+    console.log(score);
+    console.log("------EODEBUG----");
+    console.log("--------------------");
+  }
+  //
   async function getData() {
-      const url = ("http://testing:3000/api/v1/data/" + id);
-    try{
-        const call = await fetch(url);
-        const data = await call.json(); 
+    const url = "http://testing:3000/api/v1/data/" + id;
+    try {
+      const call = await fetch(url);
+      const data = await call.json();
 
-        applyCoordinates(data);
-        setLevelImage(data.url);
-        
-    }
-    catch(error){ 
-        console.log(error);
+      applyCoordinates(data);
+      setLevelImage(data.url);
+    } catch (error) {
+      console.log(error);
     }
   }
 
-  async function submitData(information) {
-      const url = ("http://testing:3000/api/v1/data/" + id);
-    try{
-        const call = await fetch(url);
-        const data = await call.json(); 
-
-        applyCoordinates(data);
-        setLevelImage(data.url);
-        
-    }
-    catch(error){ 
-        console.log(error);
+  async function winCall() {
+    // WIP POSSIBLY SUBMIT WIN TO API CALL ?
+    const url = "http://testing:3000/api/v1/data/" + id + "/win";
+    try {
+      const body = {
+        player_name: playerName,
+      };
+      const token = document.querySelector('meta[name="csrf-token"]');
+      console.log(token["content"]);
+      await fetch(url, {
+        method: "POST",
+        headers: {
+          "X-CSRF-TOKEN": token["content"],
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("Network response was not OK?!?!?");
+        })
+        .then((response) => navigate("/scoreboard"));
+    } catch (error) {
+      console.log(error);
     }
   }
-function incrementScore(){ 
-  setScore(score + 1);
-}
-  function applyCoordinates(coordinateSet) {  
-    console.log(coordinateSet)
+  function incrementScore() {
+    setScore(score + 1);
+  }
+  function applyCoordinates(coordinateSet) {
+    console.log(coordinateSet);
     newCoordinates = coordinateSet.coordinates.map((newCord) => {
-      return newCord
+      return newCord;
     });
-    setCoordinates(newCoordinates)
+    setCoordinates(newCoordinates);
   }
-  function verifyCoordinate(clickedCoordinate = [1,1]) {
-    console.log(clickedCoordinate)
+  function adjustCoordinates(oldCoordinate) {
+    console.log("adjustcoord");
+    console.log(oldCoordinate);
+    console.log("EOadjustcoord");
+    let test = Object.entries(coordinates);
+    console.log(test);
+    setCoordinates(
+      test.filter((key, currentCoordinate) => {
+        [currentCoordinate.x_cord, currentCoordinate.y_cord] != oldCoordinate;
+      })
+    );
+  }
+  function verifyCoordinate(clickedCoordinate = [1, 1]) {
+    console.log(clickedCoordinate);
     mappedCords = coordinates.map((coord) => {
-    return [coord.x_cord,coord.y_cord]
-  })
-    if (JSON.stringify(mappedCords).includes(JSON.stringify(clickedCoordinate))) {
-      console.log("You found the character!")
+      return [coord.x_cord, coord.y_cord];
+    });
+    if (
+      JSON.stringify(mappedCords).includes(JSON.stringify(clickedCoordinate))
+    ) {
+      console.log("You found the character!");
+      adjustCoordinates(JSON.stringify(clickedCoordinate));
       incrementScore();
+    } else {
+      console.log("Try again!");
     }
-    else {
-      console.log("Try again!")
-    }
-
   }
 
   function imageClickHandler(position) {
-    console.log("you have clicked" + JSON.stringify(position))
+    console.log("you have clicked" + JSON.stringify(position));
     checkGamestate();
     verifyCoordinate(position);
-    }
+  }
   function imageClick() {}
 
-  function updateGrid(gridUpdate) { 
-    setGrid([...grid, gridUpdate])
+  function updateGrid(gridUpdate) {
+    setGrid([...grid, gridUpdate]);
   }
 
-  function checkGamestate() { 
-    if (score > 4) { 
-      console.log("you win!")
-      deactivateGame()
+  function checkGamestate() {
+    if (score > 4) {
+      console.log("you win!");
+      deactivateGame();
       winScene();
     }
   }
-  function scoreboardCreation() { 
-
-  }
-  function makeplayArea() { 
-    let levelHeight = Math.round(levelRef.current.clientHeight/10);
-    let levelWidth = Math.round(levelRef.current.clientWidth/10);
+  function scoreboardCreation() {}
+  function makeplayArea() {
+    let levelHeight = Math.round(levelRef.current.clientHeight / 10);
+    let levelWidth = Math.round(levelRef.current.clientWidth / 10);
     let emptyArray = new Array(levelHeight).fill([]);
     var heightAccumulator = 0;
 
-    setGrid(emptyArray.map(() => {
-    var widthAccumulator = 0;       
-      let halfGrid = new Array(levelWidth).fill(heightAccumulator);
-      let fullGrid = halfGrid.map((subArray) => {
-        subArray = [widthAccumulator, heightAccumulator];
-        widthAccumulator += 1;
-        return subArray;
-      });
-      heightAccumulator+=1;
-      return fullGrid;
-  
-    }))
+    setGrid(
+      emptyArray.map(() => {
+        var widthAccumulator = 0;
+        let halfGrid = new Array(levelWidth).fill(heightAccumulator);
+        let fullGrid = halfGrid.map((subArray) => {
+          subArray = [widthAccumulator, heightAccumulator];
+          widthAccumulator += 1;
+          return subArray;
+        });
+        heightAccumulator += 1;
+        return fullGrid;
+      })
+    );
   }
 
-  function deactivateGame() { 
-    console.log("deactivategamefunciton")
-    console.log(playingFieldRef)
-    setEventDisabled(!eventDisabled)
+  function deactivateGame() {
+    console.log("deactivategamefunciton");
+    console.log(playingFieldRef);
+    setEventDisabled(!eventDisabled);
     console.log(eventDisabled);
-    console.log("endofdeactivategamefunciton")
+    console.log("endofdeactivategamefunciton");
   }
-  function winScene(){ 
-    let name = window.prompt("Congratulations!\nWhat is your name?") || "Anonymous"
+  function winScene() {
+    let name =
+      window.prompt("Congratulations!\nWhat is your name?") || "Anonymous";
 
-    console.log(name);
-    return (
-      <iframe src="" frameborder="0"></iframe>
-    ) 
+    setPlayerName(name);
   }
 
   function submitWin() {
     useEffect(() => {
-      console.log("SUBMIT WIN EFFECT")
- 
-      console.log("END OF SUBMIT WIN EFFECT")
+      console.log("SUBMIT WIN EFFECT");
+      winCall();
+      console.log("END OF SUBMIT WIN EFFECT");
     }, []);
-  
   }
 
   function changeCharacter(charNum) {
@@ -152,54 +183,67 @@ function incrementScore(){
   function clickHandler(textContent = "nothing") {
     console.log(character);
     changeCharacter(textContent);
-    // 
+    //
     verifyCoordinate();
   }
 
   useEffect(() => {
-    console.log("Using effect")
+    console.log("Using effect");
     getData();
-    console.log(levelImage)
+    console.log(levelImage);
   }, []);
 
   ///testing
-  console.log(grid)
-  console.log(coordinates)
+  debug();
   //endoftesting
   return (
     <>
-    <Timer />
+      <Timer />
       <div id="gameContainer">
         <div id="playField">
           <div id="map" ref={mapRef}>
-
-            <div id="clickMap" >
-            {
-            grid.map((column) => (
-              <div key={column} className="grid-Column" > 
-              {column.map((coordinates) => ( 
-
-                 <div key={coordinates} className="grid-Row"  ref={playingFieldRef} onClick={
-                   () => {  
-                    if (!eventDisabled) { imageClickHandler(coordinates)} }}
-                   >
-
-                   </div> 
+            <div id="clickMap">
+              {grid.map((column) => (
+                <div key={column} className="grid-Column">
+                  {column.map((coordinates) => (
+                    <div
+                      key={coordinates}
+                      className="grid-Row"
+                      ref={playingFieldRef}
+                      onClick={() => {
+                        if (!eventDisabled) {
+                          imageClickHandler(coordinates);
+                        }
+                      }}
+                    ></div>
+                  ))}
+                </div>
               ))}
-              </div> 
-            ))}
             </div>
-            <img id = "playingMap" ref={levelRef}  onLoad={makeplayArea} src={levelImage} alt="where's wally map" />
-
+            <img
+              id="playingMap"
+              ref={levelRef}
+              onLoad={makeplayArea}
+              src={levelImage}
+              alt="where's wally map"
+            />
           </div>
         </div>
-          <div id="characters">
-            <button onClick={() => clickHandler(1)}>Character 1</button>
-            <button onClick={() => clickHandler(2)}>Character 2</button>
-            <button onClick={() => clickHandler(3)}>Character 3</button>
-            <button onClick={() => clickHandler(4)}>Character 4</button>
-            <button onClick={() => {winScene();deactivateGame();}}>Win (TEST BUTTON)</button>
-          </div>
+        <div id="characters">
+          <button onClick={() => clickHandler(1)}>Character 1</button>
+          <button onClick={() => clickHandler(2)}>Character 2</button>
+          <button onClick={() => clickHandler(3)}>Character 3</button>
+          <button onClick={() => clickHandler(4)}>Character 4</button>
+          <button
+            onClick={() => {
+              winScene();
+              deactivateGame();
+              winCall();
+            }}
+          >
+            Win (TEST BUTTON)
+          </button>
+        </div>
       </div>
     </>
   );
