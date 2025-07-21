@@ -27,21 +27,21 @@ module Api
 
         def new_score
           counter(true, @@starting_time)
-          # @score = Score.new(score_params.merge({ player_score: session[:time], level_id: params[:id] }))
+          # @score = Score.new(score_params.merge({ score: session[:time].to_s, level_id: params[:id] }))
           @score = Scoreboard.new(player_name: params[:player_name], score: session[:time].to_s, level_id: params[:id])
           if @score then
             @score.save
-            render :scoreboard
+            # render "/scoreboard"
           else
             render :root
             flash[:alert] = "There was an error!"
           end
 
+        end
         private
 
         def score_params
-          params.permit(:player_name)
-        end
+          params.permit(scoreboard: :player_name)
         end
     end
   end

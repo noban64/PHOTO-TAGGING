@@ -3,9 +3,9 @@ class LevelController < ApplicationController
      @levels = Level.all.order(id: :asc)
   end
 
-  def attach
+  def attach 
     @levels = Level.all()
-
+    
     @levels.each do |level|
       level.images.attach(io: File.open("storage/Level_Assets/MMX_#{level.id}.webp"), filename: "MMX_#{level.id}.webp")
     end

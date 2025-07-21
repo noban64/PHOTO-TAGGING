@@ -3,7 +3,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import Timer from "./Timer";
 
 export default () => {
-  const [character, setCharacter] = useState(1);
+  const navigate = useNavigate();
+  const [winIssued, setWinIssued] = useState(false);
+  const [character, setCharacter] = useState(new Array(4).fill(false));
   const [grid, setGrid] = useState([]);
   const { id } = useParams();
   const [levelImage, setLevelImage] = useState("#");
@@ -14,13 +16,17 @@ export default () => {
   const levelRef = useRef(null);
   const mapRef = useRef(null);
   const playingFieldRef = useRef(null);
+  const [testingparams, settestingparams] = useState([]);
   //
   function debug() {
     console.log("--------------------");
     console.log("--------DEBUG----");
     console.log(grid);
     console.log(coordinates);
+    console.log(coordinates.length);
     console.log(score);
+    console.log(character);
+
     console.log("------EODEBUG----");
     console.log("--------------------");
   }
@@ -31,7 +37,7 @@ export default () => {
       const call = await fetch(url);
       const data = await call.json();
 
-      applyCoordinates(data);
+      applyCoordinates(data.coordinates);
       setLevelImage(data.url);
     } catch (error) {
       console.log(error);
@@ -46,7 +52,6 @@ export default () => {
         player_name: playerName,
       };
       const token = document.querySelector('meta[name="csrf-token"]');
-      console.log(token["content"]);
       await fetch(url, {
         method: "POST",
         headers: {
@@ -57,13 +62,16 @@ export default () => {
       })
         .then((response) => {
           if (response.ok) {
-            return response.json();
+            return response;
           }
           throw new Error("Network response was not OK?!?!?");
         })
-        .then((response) => navigate("/scoreboard"));
+        .then((response) => {
+          navigate("/scoreboard"); // redirect
+          navigate(0); // refresh because for some reason it doesnt haha
+        });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
   function incrementScore() {
@@ -71,20 +79,15 @@ export default () => {
   }
   function applyCoordinates(coordinateSet) {
     console.log(coordinateSet);
-    newCoordinates = coordinateSet.coordinates.map((newCord) => {
+    newCoordinates = coordinateSet.map((newCord) => {
       return newCord;
     });
     setCoordinates(newCoordinates);
   }
-  function adjustCoordinates(oldCoordinate) {
-    console.log("adjustcoord");
-    console.log(oldCoordinate);
-    console.log("EOadjustcoord");
-    let test = Object.entries(coordinates);
-    console.log(test);
+  function adjustCoordinates(matchedCoordinate) {
     setCoordinates(
-      test.filter((key, currentCoordinate) => {
-        [currentCoordinate.x_cord, currentCoordinate.y_cord] != oldCoordinate;
+      coordinates.filter((currentCoordinate) => {
+        return currentCoordinate.character_id != matchedCoordinate.character_id;
       })
     );
   }
@@ -93,11 +96,22 @@ export default () => {
     mappedCords = coordinates.map((coord) => {
       return [coord.x_cord, coord.y_cord];
     });
-    if (
-      JSON.stringify(mappedCords).includes(JSON.stringify(clickedCoordinate))
-    ) {
+
+    let coordinateMatch = coordinates.find((value) => {
+      if (
+        JSON.stringify([value.x_cord, value.y_cord]) ==
+        JSON.stringify(clickedCoordinate)
+      ) {
+        return value;
+      }
+    });
+    // console.log(coordinateMatch);
+    // console.log(typeof coordinateMatch);
+
+    if (coordinateMatch != null) {
       console.log("You found the character!");
-      adjustCoordinates(JSON.stringify(clickedCoordinate));
+      adjustCoordinates(coordinateMatch);
+      manageCharacterState(coordinateMatch.character_id - 1);
       incrementScore();
     } else {
       console.log("Try again!");
@@ -106,26 +120,28 @@ export default () => {
 
   function imageClickHandler(position) {
     console.log("you have clicked" + JSON.stringify(position));
-    checkGamestate();
+    settestingparams([...testingparams, JSON.stringify(position)]);
     verifyCoordinate(position);
+    console.log("coordinate length");
+    console.log(coordinates.length);
   }
-  function imageClick() {}
 
   function updateGrid(gridUpdate) {
     setGrid([...grid, gridUpdate]);
   }
 
   function checkGamestate() {
-    if (score > 4) {
+    if (score >= 4 && winIssued == false) {
+      setWinIssued(true);
       console.log("you win!");
       deactivateGame();
       winScene();
+      // submitWin();
     }
   }
-  function scoreboardCreation() {}
   function makeplayArea() {
-    let levelHeight = Math.round(levelRef.current.clientHeight / 10);
-    let levelWidth = Math.round(levelRef.current.clientWidth / 10);
+    let levelHeight = Math.round(levelRef.current.clientHeight / 30);
+    let levelWidth = Math.round(levelRef.current.clientWidth / 30);
     let emptyArray = new Array(levelHeight).fill([]);
     var heightAccumulator = 0;
 
@@ -152,33 +168,18 @@ export default () => {
     console.log("endofdeactivategamefunciton");
   }
   function winScene() {
+    console.log("win scene triggered");
     let name =
       window.prompt("Congratulations!\nWhat is your name?") || "Anonymous";
-
+    console.log(name);
     setPlayerName(name);
   }
 
-  function submitWin() {
-    useEffect(() => {
-      console.log("SUBMIT WIN EFFECT");
-      winCall();
-      console.log("END OF SUBMIT WIN EFFECT");
-    }, []);
-  }
-
-  function changeCharacter(charNum) {
-    let workingNumber = parseInt(charNum);
-    if (
-      workingNumber != 1 ||
-      workingNumber != 2 ||
-      workingNumber != 3 ||
-      workingNumber != 4
-    ) {
-      console.log("You done played with the event!");
-      setCharacter(1);
-    } else {
-      setCharacter(parseInt(workingNumber));
-    }
+  function manageCharacterState(charNum) {
+    console.log(charNum);
+    nextCharacter = character;
+    nextCharacter[charNum] = !nextCharacter[charNum];
+    setCharacter(nextCharacter);
   }
   function clickHandler(textContent = "nothing") {
     console.log(character);
@@ -187,14 +188,20 @@ export default () => {
     verifyCoordinate();
   }
 
+  // getting level data/posting win submit
   useEffect(() => {
     console.log("Using effect");
     getData();
     console.log(levelImage);
-  }, []);
+    if (winIssued == true) {
+      winCall();
+    }
+  }, [winIssued]);
 
   ///testing
   debug();
+  checkGamestate();
+  console.log(testingparams);
   //endoftesting
   return (
     <>
@@ -230,10 +237,34 @@ export default () => {
           </div>
         </div>
         <div id="characters">
-          <button onClick={() => clickHandler(1)}>Character 1</button>
-          <button onClick={() => clickHandler(2)}>Character 2</button>
-          <button onClick={() => clickHandler(3)}>Character 3</button>
-          <button onClick={() => clickHandler(4)}>Character 4</button>
+          <button>
+            {character[0] == false ? (
+              "Character 1"
+            ) : (
+              <strike> Character 1</strike>
+            )}
+          </button>
+          <button>
+            {character[1] == false ? (
+              "Character 2"
+            ) : (
+              <strike> Character 2</strike>
+            )}
+          </button>
+          <button>
+            {character[2] == false ? (
+              "Character 3"
+            ) : (
+              <strike> Character 3</strike>
+            )}
+          </button>
+          <button>
+            {character[3] == false ? (
+              "Character 4"
+            ) : (
+              <strike> Character 4</strike>
+            )}
+          </button>
           <button
             onClick={() => {
               winScene();
@@ -248,5 +279,3 @@ export default () => {
     </>
   );
 };
-
-// export default Home;

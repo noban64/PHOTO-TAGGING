@@ -1,40 +1,46 @@
-#gameContainer{
-    border: 1px solid black;
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+#gameContainer {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-    width:90vw;
-    height:90vh;
+  width: 90vw;
+  height: 90vh;
+}
+#playingMap,
+#clickMap {
+  height: 600px;
+  width: 600px;
+}
+#playField {
+  border: 1px solid black;
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+#clickMap {
+  position: absolute;
+}
+.grid-Row {
+  height: 30px;
+  width: 30px;
+}
+.grid-Row {
+  /*debug*/
+  /* -webkit-box-shadow: inset 0px 0px 0px 10px #f00; */
+  /* -moz-box-shadow: inset 0px 0px 0px 10px #f00; */
+  box-shadow: inset 0px 0px 0px 1px #f00;
+}
 
-
-}
-#playingMap{
-    height:600px;
-    width:600px;
-}
-#playField{
-    border: 1px solid black;
-    width:auto;
-    height:auto;
-    display:flex;
-    flex-direction: column;
-
-}
-#clickMap{
-    position: absolute;
-}
-.grid-Row{
-    height: 10px;
-    width: 10px;
-}
-.grid-Column{
-    display:flex;
+.grid-Column {
+  display: flex;
+  height: auto;
+  width: auto;
 }
 
-
-#map{
-    width:90%;
-    height:90%
+#map {
+  width: 90%;
+  height: 90%;
 }
