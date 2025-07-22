@@ -1,15 +1,22 @@
-#tableContainer{
-    border:1px solid black;
-    background-color: aqua;
-    display:flex;
-    justify-content: center;
-    align-items: center;
+#tableContainer {
+  border: 1px solid black;
+  background-color: aqua;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2%;
+}
+caption {
+  padding: 1%;
+  border-bottom: 1px solid black;
 }
 
-table{
-    width:60%;
+table {
+  width: 60%;
 }
-
-td{
-    text-align:center
+tr {
+  margin: 10%;
+}
+td {
+  text-align: center;
 }

@@ -1,11 +1,25 @@
+@font-face {
+  font-family: MMXFont;
+  src: url(mega-man-x.otf);
+}
+
+button {
+  border: 0;
+  padding: 1%;
+  margin: 1%;
+  font-family: MMXFont;
+}
+#html {
+  margin: 0% 5%;
+}
 #gameContainer {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  width: 90vw;
+  width: 100vw;
   height: 90vh;
 }
 #playingMap,
@@ -14,7 +28,6 @@
   width: 600px;
 }
 #playField {
-  border: 1px solid black;
   width: auto;
   height: auto;
   display: flex;
@@ -31,7 +44,7 @@
   /*debug*/
   /* -webkit-box-shadow: inset 0px 0px 0px 10px #f00; */
   /* -moz-box-shadow: inset 0px 0px 0px 10px #f00; */
-  box-shadow: inset 0px 0px 0px 1px #f00;
+  /* box-shadow: inset 0px 0px 0px 1px #f00; */
 }
 
 .grid-Column {

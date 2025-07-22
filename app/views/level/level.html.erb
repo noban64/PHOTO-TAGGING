@@ -9,15 +9,14 @@
 
 </head>
 <body>
-<h1>Level <%=@level.id%></h1>
+<h1>LEVEL <%=@level.id%></h1>
 
-<%if @level.images.attached? then %>
-  <%=image_tag @level.images.variant(:screen) %>
-<%else%>
-    <p>There's nothing attached!?</p>
-<% end %>
+<%#if @level.images.attached? then %>
+  <%#=image_tag @level.images.variant(:screen) %>
+<%#else%>
+    <%# <p>There's nothing attached!?</p> %>
+<%# end %>
 
-<%= render "win"%>
     
 </body>
 </html>

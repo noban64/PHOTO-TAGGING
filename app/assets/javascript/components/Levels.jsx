@@ -26,7 +26,6 @@ export default () => {
     console.log(coordinates.length);
     console.log(score);
     console.log(character);
-
     console.log("------EODEBUG----");
     console.log("--------------------");
   }
@@ -264,15 +263,6 @@ export default () => {
             ) : (
               <strike> Character 4</strike>
             )}
-          </button>
-          <button
-            onClick={() => {
-              winScene();
-              deactivateGame();
-              winCall();
-            }}
-          >
-            Win (TEST BUTTON)
           </button>
         </div>
       </div>

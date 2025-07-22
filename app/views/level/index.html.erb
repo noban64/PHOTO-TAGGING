@@ -3,30 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Level Select</title>
+    <%=stylesheet_link_tag "index.css"%>
+    <title>LEVEL SELECT</title>
 </head>
 <body>
-    
-    <h1> Megaman Boss Finder!</h1>
+    <div id="level-body">
+    <h1> MEGAMAN BOSS FINDER!</h1>
     <ul>
         <%if @levels.exists? then%>
             <%@levels.each do |level| %>
                 <li id="levelSelect">
-                     <%=link_to "Level #{level.id}","/level/#{level.id}"%>
+                     <%=link_to "LEVEL #{level.id}","/level/#{level.id}"%>
                 </li>
             <%end%>
         <%else%>
-                <p>There are no levels available right now!</p>
+                <p>THERE ARE NO AVAILABLE LEVELS RIGHT NOW!/p>
         <%end%>
     </ul>
-
+    </div>
     <% flash.each do |type, msg| %>
   <div>
-    <%= msg %>
+    <%= msg.toUpper %>
   </div>
 <% end %>
 </body>
 </html>
-
-
-<%=render "layouts/footer"%>
