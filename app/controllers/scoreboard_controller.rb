@@ -1,22 +1,25 @@
 class ScoreboardController < ApplicationController
+  include Pagy::Backend
+  Pagy::DEFAULT[:limit] = 10
+  Pagy::DEFAULT[:size] = 9
+  Pagy::DEFAULT[:overflow] = :last_page
+
+  rescue_from Pagy::OverflowError, with: :redirect_to_last_page
+
   def view
-
     @scoreboard = Scoreboard.all.order(score: :asc)
-    # @scoreboard = Scoreboard.all.order(score: :asc).limit(25)
-
+    @page_number = params[:page].to_i
+      if @page_number <=0  then
+        @pagy, @scoreboard= pagy(@scoreboard, page: 1)
+      else
+        @pagy, @scoreboard= pagy(@scoreboard)
+      end
   end
 
-  def viewWIP
-  page = params[:id]
-  @scoreboard = Scoreboard.all.order(score: :asc).limit(10).offset(page*10)
 
-    def pageQuery
-      pageNumber = Scoreboard.all.length
-    end
-  end
+  private
 
-  def new
-  end
-  def create
+  def redirect_to_last_page(exception)
+    redirect_to url_for(page: 1), notice: ""
   end
 end

@@ -9,10 +9,18 @@ import ErrorPage from "../components/ErrorPage.jsx";
 export default (
   <Router>
     <Routes>
-      <Route path="/" element={<Home />} ErrorBoundary={<ErrorPage/>}/>
-      <Route path="/level/:id" element={<Levels />} ErrorBoundary={<ErrorPage/>}/>
-      <Route path="/scoreboard" element={<Scoreboard />} ErrorBoundary={<ErrorPage/>}/>
-      <Route path="/about" element={<About />} ErrorBoundary={<ErrorPage/>}/>
+      <Route path="/" element={<Home />} ErrorBoundary={<ErrorPage />} />
+      <Route
+        path="/level/:id"
+        element={<Levels />}
+        ErrorBoundary={<ErrorPage />}
+      />
+      <Route
+        path="/scoreboard"
+        element={<Scoreboard />}
+        ErrorBoundary={<ErrorPage />}
+      />
+      <Route path="/about" element={<About />} ErrorBoundary={<ErrorPage />} />
     </Routes>
   </Router>
 );

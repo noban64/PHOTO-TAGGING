@@ -71,3 +71,5 @@ group :test do
 end
 
 gem "importmap-rails", "~> 2.1"
+
+gem "pagy", "~> 9.3"

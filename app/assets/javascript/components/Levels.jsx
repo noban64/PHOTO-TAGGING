@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import Timer from "./Timer";
 
 export default () => {
-  const navigate = useNavigate();
   const [winIssued, setWinIssued] = useState(false);
   const [character, setCharacter] = useState(new Array(4).fill(false));
   const [grid, setGrid] = useState([]);
@@ -16,7 +15,6 @@ export default () => {
   const levelRef = useRef(null);
   const mapRef = useRef(null);
   const playingFieldRef = useRef(null);
-  const [testingparams, settestingparams] = useState([]);
   //
   function debug() {
     console.log("--------------------");
@@ -66,8 +64,7 @@ export default () => {
           throw new Error("Network response was not OK?!?!?");
         })
         .then((response) => {
-          navigate("/scoreboard"); // redirect
-          navigate(0); // refresh because for some reason it doesnt haha
+          window.location.replace("/scoreboard");
         });
     } catch (error) {
       console.error(error);
@@ -77,7 +74,6 @@ export default () => {
     setScore(score + 1);
   }
   function applyCoordinates(coordinateSet) {
-    console.log(coordinateSet);
     newCoordinates = coordinateSet.map((newCord) => {
       return newCord;
     });
@@ -91,7 +87,6 @@ export default () => {
     );
   }
   function verifyCoordinate(clickedCoordinate = [1, 1]) {
-    console.log(clickedCoordinate);
     mappedCords = coordinates.map((coord) => {
       return [coord.x_cord, coord.y_cord];
     });
@@ -104,25 +99,16 @@ export default () => {
         return value;
       }
     });
-    // console.log(coordinateMatch);
-    // console.log(typeof coordinateMatch);
 
     if (coordinateMatch != null) {
-      console.log("You found the character!");
       adjustCoordinates(coordinateMatch);
       manageCharacterState(coordinateMatch.character_id - 1);
       incrementScore();
-    } else {
-      console.log("Try again!");
     }
   }
 
   function imageClickHandler(position) {
-    console.log("you have clicked" + JSON.stringify(position));
-    settestingparams([...testingparams, JSON.stringify(position)]);
     verifyCoordinate(position);
-    console.log("coordinate length");
-    console.log(coordinates.length);
   }
 
   function updateGrid(gridUpdate) {
@@ -132,10 +118,8 @@ export default () => {
   function checkGamestate() {
     if (score >= 4 && winIssued == false) {
       setWinIssued(true);
-      console.log("you win!");
       deactivateGame();
       winScene();
-      // submitWin();
     }
   }
   function makeplayArea() {
@@ -160,28 +144,20 @@ export default () => {
   }
 
   function deactivateGame() {
-    console.log("deactivategamefunciton");
-    console.log(playingFieldRef);
     setEventDisabled(!eventDisabled);
-    console.log(eventDisabled);
-    console.log("endofdeactivategamefunciton");
   }
   function winScene() {
-    console.log("win scene triggered");
     let name =
       window.prompt("Congratulations!\nWhat is your name?") || "Anonymous";
-    console.log(name);
     setPlayerName(name);
   }
 
   function manageCharacterState(charNum) {
-    console.log(charNum);
     nextCharacter = character;
     nextCharacter[charNum] = !nextCharacter[charNum];
     setCharacter(nextCharacter);
   }
   function clickHandler(textContent = "nothing") {
-    console.log(character);
     changeCharacter(textContent);
     //
     verifyCoordinate();
@@ -189,19 +165,13 @@ export default () => {
 
   // getting level data/posting win submit
   useEffect(() => {
-    console.log("Using effect");
     getData();
-    console.log(levelImage);
     if (winIssued == true) {
       winCall();
     }
   }, [winIssued]);
 
-  ///testing
-  debug();
   checkGamestate();
-  console.log(testingparams);
-  //endoftesting
   return (
     <>
       <Timer />

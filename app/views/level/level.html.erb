@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Level <%=@level.id%></title>
+    <%content_for :title, "LEVEL " + (@level.id).to_s %>
+
     <%=stylesheet_link_tag "levels.css"%>
 
 </head>
 <body>
 <h1>LEVEL <%=@level.id%></h1>
+
 
 <%#if @level.images.attached? then %>
   <%#=image_tag @level.images.variant(:screen) %>
@@ -20,3 +22,4 @@
     
 </body>
 </html>
+

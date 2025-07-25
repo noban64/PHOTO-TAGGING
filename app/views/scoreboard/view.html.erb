@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scoreboard</title>
+    <%content_for :title, "SCOREBOARD"%>
 
     <%=stylesheet_link_tag "scoreboard"%>
 </head>
@@ -41,5 +41,10 @@
     </tbody>
 </table>
 </div>
+<div id="pagy"> 
+    <%== pagy_nav(@pagy) if @pagy.pages > 1 %>
+</div>
 </body>
 </html>
+
+

@@ -1,6 +1,6 @@
 #tableContainer {
   border: 1px solid black;
-  background-color: aqua;
+  background-color: #2274e7af;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,4 +19,12 @@ tr {
 }
 td {
   text-align: center;
+}
+
+#pagy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1% 0%;
+  padding: 1% 0%;
 }

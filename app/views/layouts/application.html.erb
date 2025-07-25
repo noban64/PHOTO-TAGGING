@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Tagging App" %></title>
+    <title><%= yield(:title) || "MMX Tagging Game" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -24,17 +24,22 @@
     <%=stylesheet_link_tag "generalLayout.css"%>
     <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', defer: true %>
     
-  </head>
   <ul id="navigationHeader">
     <li><%=link_to("Level select",root_path)%></li>
     <li><%=link_to("Scoreboard", scoreboard_path)%></li>
     <li><%=link_to("About",about_path)%></li>
   </ul>
+  </head>
   <body>
-    <%= yield %>
+    <div id="manageBody">
+        <%= yield %>
+        <div id="secondBody">
+        </div>
+    </div>
   </body>
 
 
+<%=render "layouts/footer"%>
+
 </html>
 
-<%=render "layouts/footer"%>
