@@ -1,6 +1,6 @@
 class ScoreboardController < ApplicationController
   include Pagy::Backend
-  Pagy::DEFAULT[:limit] = 10
+  Pagy::DEFAULT[:limit] = 15
   Pagy::DEFAULT[:size] = 9
   Pagy::DEFAULT[:overflow] = :last_page
 
