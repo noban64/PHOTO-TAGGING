@@ -1,8 +1,8 @@
 # Where's Wally/Photo Tagging?
 
-From TOP -- React Section -- Where's Wally game (https://www.theodinproject.com/lessons/react-new-where-s-waldo-a-photo-tagging-app)
--- Turned it into a MMX themed one, it is easy by design but may add difficulty in future updates insha'Allah
+Where's Wally Game. Turned it into a MMX themed one, it is easy by design but may add difficulty in future updates insha'Allah.
 
+* React
 * RoR 8.0.2
     * Active Storage 
 # Non-native Gems
