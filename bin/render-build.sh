@@ -6,6 +6,7 @@ set -o errexit
 bundle install
 npm install
 npm run build
+bin/rails assets:precompile
 bin/rails db:seed
 bin/rails db:migrate
 
