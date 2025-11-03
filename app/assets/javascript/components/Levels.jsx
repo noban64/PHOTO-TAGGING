@@ -30,8 +30,7 @@ export default () => {
   //
   async function getData() {
     // const url = "http://testing:3000/api/v1/data/" + id;
-    const url =
-      "https://photo-tagging-lrjr.onrender.com/api/v1/data/" + (id + 1);
+    const url = "https://photo-tagging-lrjr.onrender.com/api/v1/data/" + id;
     try {
       const call = await fetch(url);
       const data = await call.json();
@@ -46,9 +45,7 @@ export default () => {
   async function winCall() {
     // const url = "http://testing:3000/api/v1/data/" + id + "/win";
     const url =
-      "https://photo-tagging-lrjr.onrender.com/api/v1/data/" +
-      (id + 1) +
-      "/win";
+      "https://photo-tagging-lrjr.onrender.com/api/v1/data/" + id + "/win";
     try {
       const body = {
         player_name: playerName,
