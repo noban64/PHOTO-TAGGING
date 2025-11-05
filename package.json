@@ -12,7 +12,7 @@
     "react-router-dom": "^7.6.2"
   },
   "scripts": {
-    "build": "esbuild app/assets/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets/builds",
+    "build": "esbuild app/assets/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds",
     "script_working": "echo 'script is working as intended!'"
   }
 }
