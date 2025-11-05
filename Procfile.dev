@@ -1,4 +1,4 @@
 
 css bin/rails assets:precompile
-web: env RUBY_DEBUG_OPEN=true  bin/rails server
-js: yarn build --watch
+js: 
+web: bin/rails server
