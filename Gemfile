@@ -73,3 +73,7 @@ end
 gem "importmap-rails", "~> 2.1"
 
 gem "pagy", "~> 9.3"
+
+gem "dockerfile-rails", ">= 1.7", :group => :development
+
+gem "aws-sdk-s3", "~> 1.203", :require => false
